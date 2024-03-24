@@ -3,6 +3,7 @@ package com.turkcell.rentacar.business.concretes;
 import com.turkcell.rentacar.business.abstracts.BrandService;
 import com.turkcell.rentacar.business.dtos.requests.creates.CreateBrandRequest;
 import com.turkcell.rentacar.business.dtos.requests.updates.UpdateBrandRequest;
+import com.turkcell.rentacar.business.dtos.responses.creates.CreatedBrandResponse;
 import com.turkcell.rentacar.business.dtos.responses.updates.UpdatedBrandResponse;
 import com.turkcell.rentacar.business.rules.BrandBusinessRules;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
@@ -26,14 +27,15 @@ public class BrandManager implements BrandService {
     private  BrandBusinessRules brandBusinessRules;
 
     @Override
-    public void add(CreateBrandRequest createBrandRequest) {
+    public CreatedBrandResponse add(CreateBrandRequest createBrandRequest) {
         this.brandBusinessRules.brandNameCanNotBeDuplicated(createBrandRequest.getName());
 
 
         Brand brand = this.modelMapperService.forRequest().map(createBrandRequest, Brand.class);
         brand.setCreatedDate(LocalDateTime.now());
-
-        this.brandRepository.save(brand);
+        Brand createdBrand=this.brandRepository.save(brand);
+        CreatedBrandResponse createdBrandResponse =this.modelMapperService.forResponse().map(createdBrand,CreatedBrandResponse.class);
+        return createdBrandResponse;
     }
 
     @Override

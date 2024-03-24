@@ -96,11 +96,16 @@ public class CarManager implements CarService {
     @Override
     public List<UpdatedCarResponse> getByModelName(String name) {
         List<UpdatedCarResponse> updatedCarResponseList=new ArrayList<>();
-        List<Car> carList=this.carRepository.findAll();
+        Model model= this.modelService.getByName(name);
+        List<Car> carList=this.carRepository.findByModelId(model.getId()).get();
         for (Car car:carList){
-           Model model= this.modelService.getByName(name);
-           updatedCarResponseList.add(this.modelMapperService.forResponse().map(this.carRepository.findByModelId(model.getId()).get(),UpdatedCarResponse.class));
-        }
+                updatedCarResponseList.add(this.modelMapperService.forResponse().map(car,UpdatedCarResponse.class));
+            }
         return updatedCarResponseList;
+    }
+    public Car getByIdForMaintenance(int id){
+        this.carBusinessRules.idIsNotExists(id);
+        Car car= this.carRepository.findById(id).get();
+        return car;
     }
 }

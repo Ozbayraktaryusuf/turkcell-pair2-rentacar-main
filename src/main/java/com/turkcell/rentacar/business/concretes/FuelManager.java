@@ -3,6 +3,7 @@ package com.turkcell.rentacar.business.concretes;
 import com.turkcell.rentacar.business.abstracts.FuelService;
 import com.turkcell.rentacar.business.dtos.requests.creates.CreateFuelRequest;
 import com.turkcell.rentacar.business.dtos.requests.updates.UpdateFuelRequest;
+import com.turkcell.rentacar.business.dtos.responses.creates.CreatedFuelResponse;
 import com.turkcell.rentacar.business.dtos.responses.updates.UpdatedFuelResponse;
 import com.turkcell.rentacar.business.rules.FuelBusinessRules;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
@@ -20,20 +21,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 public class FuelManager implements FuelService {
-    private final FuelRepository fuelRepository;
-    private final ModelMapperService modelMapperService;
-    private final FuelBusinessRules fuelBusinessRules;
+    private  FuelRepository fuelRepository;
+    private  ModelMapperService modelMapperService;
+    private  FuelBusinessRules fuelBusinessRules;
 
     @Override
-    public void add(CreateFuelRequest createFuelRequest)
+    public CreatedFuelResponse add(CreateFuelRequest createFuelRequest)
     {
         fuelBusinessRules.fuelNameCanNotBeDuplicated(createFuelRequest.getName());
         Fuel fuel=this.modelMapperService.forRequest().map(createFuelRequest,Fuel.class);
         fuel.setCreatedDate(LocalDateTime.now());
-        this.fuelRepository.save(fuel);
+        Fuel existsFuel=this.fuelRepository.save(fuel);
+        CreatedFuelResponse createdFuelResponse=this.modelMapperService.forResponse().map(existsFuel,CreatedFuelResponse.class);
+        return createdFuelResponse;
     }
 
     @Override

@@ -12,6 +12,6 @@ public interface PersonCustomerService {
 	List<UpdatedPersonCustomerResponse> getall();
 	UpdatedPersonCustomerResponse getById(int id);
 	void delete(int id);
-	UpdatedPersonCustomerResponse update(UpdatePersonCustomerRequest updatePersonCustomerRequest);
+	UpdatedPersonCustomerResponse update(int id,UpdatePersonCustomerRequest updatePersonCustomerRequest);
 
 }

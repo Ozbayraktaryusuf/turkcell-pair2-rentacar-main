@@ -78,6 +78,7 @@ public class ModelManager implements ModelService {
     @Transactional
     public UpdatedModelResponse update(int id, UpdateModelRequest updateModelRequest) {
         this.modelBusinessRules.idIsNotExists(id);
+        this.modelBusinessRules.modelNameCanNotBeDuplicated(updateModelRequest.getName());
         this.modelBusinessRules.modelNameCheck(id,updateModelRequest.getName());
 
         Brand brand = this.brandService.getByName(updateModelRequest.getBrandName());

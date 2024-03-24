@@ -5,6 +5,7 @@ import com.turkcell.rentacar.business.dtos.requests.updates.UpdateCarRequest;
 import com.turkcell.rentacar.business.dtos.responses.creates.CreatedCarResponse;
 import com.turkcell.rentacar.business.dtos.responses.creates.CreatedModelResponse;
 import com.turkcell.rentacar.business.dtos.responses.updates.UpdatedCarResponse;
+import com.turkcell.rentacar.entities.concretes.Car;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface CarService {
     void delete(int id);
     List<UpdatedCarResponse> getByModelName(String name);
     //getall , getById, delete,update
+    Car getByIdForMaintenance(int id);
 }

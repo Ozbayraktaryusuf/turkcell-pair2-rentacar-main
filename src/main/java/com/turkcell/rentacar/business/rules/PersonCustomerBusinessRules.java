@@ -5,7 +5,11 @@ import java.util.Optional;
 import com.turkcell.rentacar.core.utilities.exceptions.types.BusinessException;
 import com.turkcell.rentacar.dataAccess.abstracts.PersonCustomerRepository;
 import com.turkcell.rentacar.entities.concretes.PersonalCustomer;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
+@AllArgsConstructor
 public class PersonCustomerBusinessRules {
 	PersonCustomerRepository personCustomerRepository;
 	

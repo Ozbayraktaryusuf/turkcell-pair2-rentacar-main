@@ -3,6 +3,7 @@ package com.turkcell.rentacar.api.controllers;
 import com.turkcell.rentacar.business.abstracts.BrandService;
 import com.turkcell.rentacar.business.dtos.requests.creates.CreateBrandRequest;
 import com.turkcell.rentacar.business.dtos.requests.updates.UpdateBrandRequest;
+import com.turkcell.rentacar.business.dtos.responses.creates.CreatedBrandResponse;
 import com.turkcell.rentacar.business.dtos.responses.updates.UpdatedBrandResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -20,8 +21,8 @@ public class BrandController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@Valid @RequestBody CreateBrandRequest createBrandRequest){
-        this.brandService.add(createBrandRequest);
+    public CreatedBrandResponse add(@Valid @RequestBody CreateBrandRequest createBrandRequest){
+        return  this.brandService.add(createBrandRequest);
     }
 
     @GetMapping("/getById/{id}")

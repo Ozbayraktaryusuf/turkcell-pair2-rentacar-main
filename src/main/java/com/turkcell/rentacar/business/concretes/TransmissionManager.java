@@ -22,19 +22,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 public class TransmissionManager implements TransmissionService {
-    private final TransmissionRepository transmissionRepository;
-    private final ModelMapperService modelMapperService;
-    private final TransmissionBusinessRules transmissionBusinessRules;
+    private  TransmissionRepository transmissionRepository;
+    private  ModelMapperService modelMapperService;
+    private  TransmissionBusinessRules transmissionBusinessRules;
 
     @Override
-    public void add(CreateTransmissionRequest createTransmissionRequest) {
+    public CreatedTransmissionResponse add(CreateTransmissionRequest createTransmissionRequest) {
         transmissionBusinessRules.transmissionNameCanNotBeDuplicated(createTransmissionRequest.getName());
+
         Transmission transmission=this.modelMapperService.forRequest().map(createTransmissionRequest,Transmission.class);
         transmission.setCreatedDate(LocalDateTime.now());
-        this.transmissionRepository.save(transmission);
+        Transmission exitsTransmisson=this.transmissionRepository.save(transmission);
+
+        CreatedTransmissionResponse createdTransmissionResponse=this.modelMapperService.forResponse().map(exitsTransmisson,CreatedTransmissionResponse.class);
+        return createdTransmissionResponse;
     }
 
     @Override
