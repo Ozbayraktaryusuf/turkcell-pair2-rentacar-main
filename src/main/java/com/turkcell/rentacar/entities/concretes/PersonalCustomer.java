@@ -26,7 +26,7 @@ public class PersonalCustomer extends BaseCustomerEntitity{
 	private String lastName;
 
 	@Column(name ="nationalId")
-	private String nationalId;
+	private  String nationalId;
 
 	@OneToMany(mappedBy = "personalCustomer")
 	private List<Rental> rentals;

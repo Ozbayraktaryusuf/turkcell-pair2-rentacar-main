@@ -55,9 +55,9 @@ public class PersonCustomerManager implements PersonCustomerService {
     public UpdatedPersonCustomerResponse update(int id,UpdatePersonCustomerRequest updatePersonCustomerRequest) {
         this.personCustomerBusinessRules.idIsNotExists(id);
         PersonalCustomer existsPersonCustomer =this.personCustomerRepository.findById(id).get();
-        existsPersonCustomer=this.modelMapperService.forRequest().map(updatePersonCustomerRequest,PersonalCustomer.class);
-        //existsPersonCustomer.setFirstName(updatePersonCustomerRequest.getFirstName());
-        //existsPersonCustomer.setLastName(updatePersonCustomerRequest.getLastName());
+        //existsPersonCustomer=this.modelMapperService.forRequest().map(updatePersonCustomerRequest,PersonalCustomer.class);
+        existsPersonCustomer.setFirstName(updatePersonCustomerRequest.getFirstName());
+        existsPersonCustomer.setLastName(updatePersonCustomerRequest.getLastName());
         existsPersonCustomer.setUpdatedDate(LocalDateTime.now());
         PersonalCustomer updatedPersonCustomer=this.personCustomerRepository.save(existsPersonCustomer);
 
